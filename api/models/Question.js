@@ -9,7 +9,7 @@ module.exports = {
 		type:'string',
 		required: true,
 	},
-	categoría:{
+	categoria:{
 		type:'string',
 		required: true,
 	},
