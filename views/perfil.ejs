@@ -1,4 +1,31 @@
 <h1>Hola!! <%= user.nombre %></h1>
 <p>Bando: <%= user.bando %></p>
-<button>Pregunta nueva?</button>
 <button>Jugar</button>
+<h4>¿Quieres creear una pregunta nueva?</h4>
+<form method='POST' action='/question'>
+	<label>Pregunta:</label>
+	<input type:'text' name='pregunta'/><br/>	
+	<label>Categoría:</label>
+	<select name="categoria">
+	  <option value="FPS">First Person Shooter</option>
+	  <option value="RPG">Role Playing Game</option>
+	  <option value="MMO">Massive Multiplayer Online game</option>
+	  <option value="RTS">Real Time Strategy game</option>
+	</select><br/>
+	<label>Opcion 1:</label>
+	<input type:'text' name='opcion1'/><br/>
+	<label>Opcion 2:</label>
+	<input type:'text' name='opcion2'/><br/>
+	<label>Opcion 3:</label>
+	<input type:'text' name='opcion3'/><br/>
+	<label>Opcion 4:</label>
+	<input type:'text' name='opcion4'/><br/>
+	<label>Indica el número de la opcion que es la correcta:</label>
+	<select name="correcta">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	</select>
+	<input type='submit' name='enviar'/>
+</form>

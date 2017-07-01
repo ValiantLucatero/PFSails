@@ -43,6 +43,9 @@ module.exports.routes = {
   'get /login': {
        view: 'login'
   },
+  'get /perfil': {
+       view: 'perfil'
+  },
 
   /***************************************************************************
   *                                                                          *

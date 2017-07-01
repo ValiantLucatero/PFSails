@@ -5,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 const passport = require('passport');
-    
+var user1;   
 //Iniciar sesión
 function login (req, res) {
 
@@ -17,6 +17,7 @@ function login (req, res) {
             });
         }
         req.logIn(user, function(err) {
+			user1=user;
             if (err) res.send(err);
 				return res.status(200).render('perfil',{
 					title: "Usuarios",
@@ -50,12 +51,23 @@ function createUser (req, res){
 function createQuestion (req, res){
 	Question.create({
 			pregunta: req.body.pregunta,
+			categoria: req.body.categoria,
+			opcion1: req.body.opcion1,
+			opcion2: req.body.opcion2,
+			opcion3: req.body.opcion3,
+			opcion4: req.body.opcion4,
+			correcta: req.body.correcta,
 			}).exec((err,user) => {
 		if(err){
+			console.log(err);
 			return res.status(500).send('Error');
 		}
-		return res.status(200).send('resgistrado');
-	});	
+		return res.status(200).render('perfil',{
+					title: "Usuarios",
+					user: user1,
+					layout: 'layout',
+		});
+	});
 }
 //Imprime todas las preguntas con sus opciones, esto aun no lo hace
 function readQuestions (req,res){
