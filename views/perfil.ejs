@@ -1,13 +1,29 @@
 <h1>Hola!! <%= user.nombre %></h1>
+<form method='POST' action='/logout'>
+	<input type='submit' value='Salir'/>
+</form>
 <p>Bando: <%= user.bando %></p>
 <p>Dificultad: <%= dificultad %></p>
 <% if(jg!=0){ %>
 	<p>En tu último juego <%= victoria %></p>
 <% } %>
+<p>Categorias con las que juegas: <%= categoria %></p>
 <form method='POST' action='/juego'>
-	<input type='submit' value='Jugar vs. Compu'/>
+	<input type='submit' value='Jugar vs. CPU'/>
+</form>
+<form method='POST' action='/puntos'>
+	<input type='submit' value='Tus puntajes'/>
 </form>
 <button>Jugar vs. Otro</button>
+<h4>Instrucciones e información:</h4>
+<p><h5>Modo vs CPU:</h5>
+Se te presenta una ronda de 5 preguntas que tendrás que contestar de la mejor manera posible en un tiempo límite, mientras tu contestas la computadora tambien lo hará así que puedes notar un incremento en su puntaje, cuida que no sea mayar que el tuyo para ganar. Al finalizar las 5 preguntas la página se redireccionará a tu perfil y   aparecerá el resultado de tu última ronda abajo de tu dificultad elegida<p>
+<p><h5>Descripcion de las categorias:</h5>
+FPS:Los tiradores en primera persona son un tipo de juego de tiro tridimensional, con un punto de vista en primera persona con el que el jugador ve la acción a través de los ojos del personaje del jugador.<br/>
+RPG:Es un juego en el que, tal como indica su nombre, uno o más jugadores desempeñan un determinado rol, papel o personalidad. <br/>
+MMO:Es un videojuego en donde pueden participar, e interactuar en un mundo virtual, un gran número de jugadores del orden de cientos o miles simultáneamente (multijugador) conectados a través de la red.<br/>
+RTS:Son videojuegos de estrategia en los que no hay turnos sino que el tiempo transcurre de forma continua para los jugadores.
+</p>
 <h4>Cambiar dificultad:</h4>
 <form method='POST' action='/cambio'>
 	<input type="radio" name="dificultad" value="Fácil">Fácil<br/>

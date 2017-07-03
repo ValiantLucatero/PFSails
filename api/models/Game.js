@@ -4,16 +4,16 @@ module.exports = {
 		type:'string',
 		required: true,
 	},
-	abandonadas:{
-		type:'string',
-		required: true,
-	},
-	ganadas:{
+	estado:{
 		type:'string',
 		required: true,
 	},
 	puntaje:{
-		type:'integer',
+		type:'string',
+		required: true,
+	},
+	oponente:{
+		type:'string',
 		required: true,
 	},
 	bando:{

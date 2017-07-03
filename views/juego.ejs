@@ -1,14 +1,15 @@
+<meta http-equiv="Refresh" content="5;url=/checar">
 <h1><%= question.pregunta %></h1>
 <h4>Categoría: <%= question.categoria %></h4>
 <h4>Tu puntaje: <%= puntaje %></h4>
 <h4>Oponente: <%= elotro %></h4>
+<h2 id="tiempo">Tiempo: 5</h2>
 <% if(estado==0){ %>
-	<form method='POST' action='/checar'>
+	<form name="formulario" method='POST' action='/checar'>
 		<input type="radio" name="opcion" value="1"><%= question.opcion1 %><br/>
 		<input type="radio" name="opcion" value="2"><%= question.opcion2 %><br/>
 		<input type="radio" name="opcion" value="3"><%= question.opcion3 %><br/>
 		<input type="radio" name="opcion" value="4"><%= question.opcion4 %><br/>
-		<input type='submit' name='enviar'/>
 	</form>
 <% } else { %>
 	<p><%= question.opcion1 %><p/>
@@ -16,7 +17,21 @@
 	<p><%= question.opcion3 %><p/>
 	<p><%= question.opcion4 %><p/>
 	<h1><%= mensaje %></h1>
-	<form method='POST' action='/juego'>
+	<form name="formulario" method='POST' action='/juego'>
 		<input type='submit' value='Siguiente'/>
 	</form>
 <% } %>
+<form method='GET' action='/perfil'>
+		<input type='submit' value='abandonar juego'/>
+</form>
+<script type="text/javascript">
+		var a=5;
+		var t = setInterval(function(){
+			a--;
+			if(a == 0){
+				clearInterval(t);
+				document.formulario.submit();
+			}
+			document.getElementById('tiempo').innerHTML = "Tiempo: " + a;
+		},1000);
+	</script>
