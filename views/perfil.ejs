@@ -1,7 +1,19 @@
 <h1>Hola!! <%= user.nombre %></h1>
 <p>Bando: <%= user.bando %></p>
+<p>Dificultad: <%= dificultad %></p>
+<% if(jg!=0){ %>
+	<p>En tu último juego <%= victoria %></p>
+<% } %>
 <form method='POST' action='/juego'>
-	<input type='submit' value='Jugar'/>
+	<input type='submit' value='Jugar vs. Compu'/>
+</form>
+<button>Jugar vs. Otro</button>
+<h4>Cambiar dificultad:</h4>
+<form method='POST' action='/cambio'>
+	<input type="radio" name="dificultad" value="Fácil">Fácil<br/>
+	<input type="radio" name="dificultad" value="Intermedio">Intermedio<br/>
+	<input type="radio" name="dificultad" value="Difícil">Difícil<br/>
+	<input type='submit' name='enviar'/>
 </form>
 <h4>¿Con qué categorias quieres jugar?</h4>
 <form method='POST' action='/categoria'>

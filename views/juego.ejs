@@ -1,6 +1,22 @@
 <h1><%= question.pregunta %></h1>
-<h4>Bando: <%= question.categoria %></h4>
-<p><%= question.opcion1 %></p>
-<p><%= question.opcion2 %></p>
-<p><%= question.opcion3 %></p>
-<p><%= question.opcion4 %></p>
+<h4>Categoría: <%= question.categoria %></h4>
+<h4>Tu puntaje: <%= puntaje %></h4>
+<h4>Oponente: <%= elotro %></h4>
+<% if(estado==0){ %>
+	<form method='POST' action='/checar'>
+		<input type="radio" name="opcion" value="1"><%= question.opcion1 %><br/>
+		<input type="radio" name="opcion" value="2"><%= question.opcion2 %><br/>
+		<input type="radio" name="opcion" value="3"><%= question.opcion3 %><br/>
+		<input type="radio" name="opcion" value="4"><%= question.opcion4 %><br/>
+		<input type='submit' name='enviar'/>
+	</form>
+<% } else { %>
+	<p><%= question.opcion1 %><p/>
+	<p><%= question.opcion2 %><p/>
+	<p><%= question.opcion3 %><p/>
+	<p><%= question.opcion4 %><p/>
+	<h1><%= mensaje %></h1>
+	<form method='POST' action='/juego'>
+		<input type='submit' value='Siguiente'/>
+	</form>
+<% } %>

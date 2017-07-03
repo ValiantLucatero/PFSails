@@ -9,7 +9,19 @@ const passport = require('passport');
 var user1; 
 //checar categorias 
 var todas=[];
-var category=0;  
+var category=0; 
+//verifica si la pregunta apenas se contesta o se califica 
+var estado=0;
+var juego=0;
+var jg=0;
+var dificultad="Intermedio";
+var victoria;
+//puntajes
+var puntaje=0;
+var elotro=0;
+//verificacion de la pregunta
+var mensaje="";
+var pregunta;
 //Iniciar sesión
 function login (req, res) {
 
@@ -23,6 +35,9 @@ function login (req, res) {
 				return res.status(200).render('perfil',{
 					title: "Usuarios",
 					user: user,
+					jg: jg,
+					victoria: victoria,
+					dificultad: dificultad,
 					layout: 'layout',
 				});
         });
@@ -66,6 +81,9 @@ function createQuestion (req, res){
 		return res.status(200).render('perfil',{
 					title: "Usuarios",
 					user: user1,
+					jg: jg,
+					victoria: victoria,
+					dificultad:dificultad,
 					layout: 'layout',
 		});
 	});
@@ -75,9 +93,16 @@ function readQuestions (req,res){
 	Question.count().exec(function countCB(error, found) {
 		   return Question.find().skip(Math.floor(Math.random()* found )).limit(1)
 		   .then((foundQuestion) => {
+			   pregunta=foundQuestion[0];
+			   estado=0;
+			   juego++;
 				res.status(200).render('juego',{
 					title: "Preguntas",
 					question: foundQuestion[0],
+					estado: estado,
+					puntaje: puntaje,
+					elotro: elotro,
+					mensaje: mensaje,
 					layout: 'layout',
 				});
 			})
@@ -85,6 +110,48 @@ function readQuestions (req,res){
 				res.status(500).send(err);
 			})
 	});
+}
+//checa si la respuesta del usuario es correcta o no
+function juegocompu (req, res){
+	if(juego<=5){
+		if(req.body.opcion == pregunta.correcta){
+			mensaje="Bien hecho";
+			puntaje=puntaje+50;
+		}
+		else{
+			mensaje="Fallaste";
+		}
+		if((Math.floor(Math.random()* 3)+1) == 2)
+			elotro=elotro+50;
+		estado=1;
+		res.status(200).render('juego',{
+			title: "Preguntas",
+			question: pregunta,
+			estado: estado,
+			puntaje: puntaje,
+			elotro: elotro,
+			mensaje: mensaje,
+			layout: 'layout',
+		});
+	}
+	else{
+		jg=1;
+		if(puntaje > elotro)
+			victoria="ganaste";
+		else 
+			victoria="perdiste";
+		res.status(200).render('perfil',{
+			title: "Usuarios",
+			user: user1,
+			jg: jg,
+			dificultad:dificultad,
+			victoria:victoria,
+			layout: 'layout',
+		});
+		puntaje=0;
+		elotro=0;
+		juego=0;
+	}
 }
 //Permite al usuario escoger las categorias para jugar, no agarra el isset
 function categoria (req,res){
@@ -107,6 +174,20 @@ function categoria (req,res){
 	return res.status(200).render('perfil',{
 		title: "Usuarios",
 		user: user1,
+		jg: jg,
+		dificultad: dificultad,
+		victoria: victoria,
+		layout: 'layout',
+	});
+}
+function cambio (req,res){
+	dificultad=req.body.dificultad;
+	return res.status(200).render('perfil',{
+		title: "Usuarios",
+		user: user1,
+		jg: jg,
+		dificultad: dificultad,
+		victoria: victoria,
 		layout: 'layout',
 	});
 }
@@ -120,6 +201,8 @@ module.exports = {
 	createQuestion,
 	readQuestions,
 	login,
+	cambio,
+	juegocompu,
 	logout,
 	categoria,
 };

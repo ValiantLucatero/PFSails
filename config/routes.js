@@ -36,7 +36,9 @@ module.exports.routes = {
   'post /question': 'UserController.createQuestion',
   'post /juego': 'UserController.readQuestions',
   'post /login': 'UserController.login',
+  'post /checar': 'UserController.juegocompu',
   'post /categoria': 'UserController.categoria',
+  'post /cambio': 'UserController.cambio',
   '/logout': 'UserController.logout',
    '/': {
     view: 'homepage'
