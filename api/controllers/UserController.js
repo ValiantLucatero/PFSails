@@ -73,19 +73,19 @@ function createQuestion (req, res){
 //Imprime una pregunta al azar
 function readQuestions (req,res){
 	Question.count().exec(function countCB(error, found) {
-		   return Question.find().skip(Math.floor(Math.random()*(((found)-1)-1)+1)).limit(1)
+		   return Question.find().skip(Math.floor(Math.random()* found )).limit(1)
 		   .then((foundQuestion) => {
-			   console.log(foundQuestion);
+			   console.log(Math.floor(Math.random()*(((found)-1)-1)+1));
 				res.status(200).render('juego',{
 					title: "Preguntas",
-					users: foundQuestion,
+					question: foundQuestion[0],
 					layout: 'layout',
 				});
 			})
 			.catch((err) =>{
 				res.status(500).send(err);
 			})
-	   });
+	});
 }
 //Permite al usuario escoger las categorias para jugar, no agarra el isset
 function categoria (req,res){
