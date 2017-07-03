@@ -1,6 +1,18 @@
 <h1>Hola!! <%= user.nombre %></h1>
 <p>Bando: <%= user.bando %></p>
-<button>Jugar</button>
+<form method='POST' action='/juego'>
+	<input type='submit' value='Jugar'/>
+</form>
+<h4>¿Con qué categorias quieres jugar?</h4>
+<form method='POST' action='/categoria'>
+	<label>Marca todas las opciones con las cuales quieres jugar:</label><br/>
+	<input type="checkbox" name="FPS">First Person Shooter (FPS)<br>
+	<input type="checkbox" name="RPG">Role Playing Game (RPG)<br>
+	<input type="checkbox" name="MMO">Massive Multiplayer Online game (MMO)<br>
+	<input type="checkbox" name="RTS">Real Time Strategy game (RTS)<br>
+	<label>Si no marcas ninguna opcion jugarás con todas</label>
+	<input type='submit' name='enviar'/>
+</form>
 <h4>¿Quieres creear una pregunta nueva?</h4>
 <form method='POST' action='/question'>
 	<label>Pregunta:</label>
