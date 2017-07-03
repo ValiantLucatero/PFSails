@@ -1,0 +1,24 @@
+<h2>Iniciar sesion</h2>
+<form method='POST' action='/login'>
+	<label>Email:</label>
+	<input type:'email' name='email'/>		
+	<label>Password:</label>
+	<input type='password' name='password' maxlength='16'/>
+	<input type='submit' name='enviar'/>
+</form>
+<h2>Regístrate</h2>
+<form method='POST' action='/user'>
+	<label>Nombre:</label>
+	<input type:'text' name='nombre' maxlength='9'/>				
+	<label>Password:</label>
+	<input type='password' name='password' maxlength='16'/>
+	<label>Email:</label>
+	<input type:'email' name='email'/>
+	<select name="bando">
+	  <option value="Pacman">Pacman</option>
+	  <option value="Mario bros">Mario Bros</option>
+	  <option value="FIFA">FIFA</option>
+	  <option value="Halo">Halo</option>
+	</select>
+	<input type='submit' name='enviar'/>
+</form>
