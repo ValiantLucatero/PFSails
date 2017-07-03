@@ -75,7 +75,6 @@ function readQuestions (req,res){
 	Question.count().exec(function countCB(error, found) {
 		   return Question.find().skip(Math.floor(Math.random()* found )).limit(1)
 		   .then((foundQuestion) => {
-			   console.log(Math.floor(Math.random()*(((found)-1)-1)+1));
 				res.status(200).render('juego',{
 					title: "Preguntas",
 					question: foundQuestion[0],
