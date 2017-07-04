@@ -257,6 +257,7 @@ function puntos(req,res){
 		let gn=0;
 		let wr=0;
 		let mejor=0;
+		var game;
 		foundGame.forEach(function(element) {
 			if(element.estado=="ganaste"){
 				if(mejor<element.puntaje){
@@ -267,15 +268,21 @@ function puntos(req,res){
 			}
 			else
 				wr++;
-		});
-		res.status(200).render('puntajes',{
-			title: "Puntajes",
-			total: gn+wr,
-			ganados: gn,
-			puntaje: pt,
-			mejor: mejor,
-			perdidos: wr,
-			layout: 'layout',
+			var myQuery = Game.find();
+			myQuery.where({"usuario": user1.id, "oponente":{$ne:"CPU"}});
+			myQuery.exec(function callBack(err,results){
+				game=results;
+				res.status(200).render('puntajes',{
+					title: "Puntajes",
+					total: gn+wr,
+					ganados: gn,
+					puntaje: pt,
+					mejor: mejor,
+					perdidos: wr,
+					games: game,
+					layout: 'layout',
+				});
+			});
 		});
 	})
 	.catch((err) =>{
