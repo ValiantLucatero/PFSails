@@ -9,9 +9,29 @@ module.exports = {
 		type:'string',
 		required: true,
 	},
-	opcion:{
-		collection:'option',
-		via:'id',
+	categoria:{
+		type:'string',
+		required: true,
+	},
+	opcion1:{
+		type:'string',
+		required: true,
+	},
+	opcion2:{
+		type:'string',
+		required: true,
+	},
+	opcion3:{
+		type:'string',
+		required: true,
+	},
+	opcion4:{
+		type:'string',
+		required: true,
+	},
+	correcta:{
+		type:'string',
+		required: true,
 	},
   }
 };

@@ -1,0 +1,21 @@
+<h1>Contra la computadora</h1>
+<h4>Total de Juegos: <%= total %></h4>
+<dt>Juegos ganados: <%= ganados %></dt>
+<dd>Mejor puntaje: <%= mejor %></dd>
+<dd>Puntaje acumulado: <%= puntaje %></dd>
+<p>Juegos perdidos: <%= perdidos %></p>
+<h1>Duelos</h1>
+<%if(games.length>0){
+	for(game of games) { %>
+		<dt>Oponente: <%= game.oponente %></dt>
+		<dd><%= game.estado %></dd>
+		<% if (game.estado=="ganaste"){ %>
+			<dd>Con: <%= game.puntaje %></dd>
+		<%}
+	}
+} else {%>
+		<h1>No tienes duelos</h1>
+	<% } %>	
+<form method='GET' action='/perfil'>
+		<input type='submit' value='Regresar'/>
+</form>

@@ -1,4 +1,79 @@
 <h1>Hola!! <%= user.nombre %></h1>
+<form method='POST' action='/logout'>
+	<input type='submit' value='Salir'/>
+</form>
 <p>Bando: <%= user.bando %></p>
-<button>Pregunta nueva?</button>
-<button>Jugar</button>
+<p>Dificultad: <%= dificultad %></p>
+<% if(jg!=0){ %>
+	<p>En tu último juego <%= victoria %></p>
+<% } %>
+<p>Categorias con las que juegas: <%= categoria %></p>
+<form method='POST' action='/juego'>
+	<input type="hidden" name="compu" value="si">
+	<input type='submit' value='Jugar vs. CPU'/>
+</form>
+<form method='POST' action='/puntos'>
+	<input type='submit' value='Tus puntajes'/>
+</form>
+<form method='POST' action='/oponente'>
+	<input type='submit' value='Jugar vs. Otro'/>
+</form>
+<form method='POST' action='/pendiente'>
+	<input type='submit' value='Juegos pendientes'/>
+</form>
+<h4>Instrucciones e información:</h4>
+<p><h5>Modo vs CPU:</h5>
+Se te presenta una ronda de 5 preguntas que tendrás que contestar de la mejor manera posible en un tiempo límite, mientras tu contestas la computadora tambien lo hará así que puedes notar un incremento en su puntaje, cuida que no sea mayor que el tuyo para ganar. Al finalizar las 5 preguntas la página se redireccionará a tu perfil y   aparecerá el resultado de tu última ronda abajo de tu dificultad elegida<p>
+<p><h5>Modo vs. Otro </h5>
+Al igual que contra la computadora se te presentara una ronda de 5 preguntas con un tiempo límite, al término de las preguntas tendrás que esperar a que tu amigo conteste para ver en “Tus puntajes” quien ganó y por cuanto, no te desesperes si en la primera ronda no aparece tu oponente bien, puede tardar un poco.</p>
+<p><h5>Descripcion de las categorias:</h5>
+FPS:Los tiradores en primera persona son un tipo de juego de tiro tridimensional, con un punto de vista en primera persona con el que el jugador ve la acción a través de los ojos del personaje del jugador.<br/>
+RPG:Es un juego en el que, tal como indica su nombre, uno o más jugadores desempeñan un determinado rol, papel o personalidad. <br/>
+MMO:Es un videojuego en donde pueden participar, e interactuar en un mundo virtual, un gran número de jugadores del orden de cientos o miles simultáneamente (multijugador) conectados a través de la red.<br/>
+RTS:Son videojuegos de estrategia en los que no hay turnos sino que el tiempo transcurre de forma continua para los jugadores.
+</p>
+<h4>Cambiar dificultad:</h4>
+<form method='POST' action='/cambio'>
+	<input type="radio" name="dificultad" value="Fácil">Fácil<br/>
+	<input type="radio" name="dificultad" value="Intermedio">Intermedio<br/>
+	<input type="radio" name="dificultad" value="Difícil">Difícil<br/>
+	<input type='submit' name='enviar'/>
+</form>
+<h4>¿Con qué categorias quieres jugar?</h4>
+<form method='POST' action='/categoria'>
+	<label>Marca todas las opciones con las cuales quieres jugar:</label><br/>
+	<input type="checkbox" name="FPS">First Person Shooter (FPS)<br>
+	<input type="checkbox" name="RPG">Role Playing Game (RPG)<br>
+	<input type="checkbox" name="MMO">Massive Multiplayer Online game (MMO)<br>
+	<input type="checkbox" name="RTS">Real Time Strategy game (RTS)<br>
+	<label>Si no marcas ninguna opcion jugarás con todas</label>
+	<input type='submit' name='enviar'/>
+</form>
+<h4>¿Quieres creear una pregunta nueva?</h4>
+<form method='POST' action='/question'>
+	<label>Pregunta:</label>
+	<input type:'text' name='pregunta'/><br/>	
+	<label>Categoría:</label>
+	<select name="categoria">
+	  <option value="FPS">First Person Shooter</option>
+	  <option value="RPG">Role Playing Game</option>
+	  <option value="MMO">Massive Multiplayer Online game</option>
+	  <option value="RTS">Real Time Strategy game</option>
+	</select><br/>
+	<label>Opcion 1:</label>
+	<input type:'text' name='opcion1'/><br/>
+	<label>Opcion 2:</label>
+	<input type:'text' name='opcion2'/><br/>
+	<label>Opcion 3:</label>
+	<input type:'text' name='opcion3'/><br/>
+	<label>Opcion 4:</label>
+	<input type:'text' name='opcion4'/><br/>
+	<label>Indica el número de la opcion que es la correcta:</label>
+	<select name="correcta">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	</select>
+	<input type='submit' name='enviar'/>
+</form>

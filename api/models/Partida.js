@@ -1,15 +1,17 @@
-/**
- * Option.js
- *
- * @description :: Implementacion de un modelo para las opciones
- */
 module.exports = {
   attributes: {
-	opcion:{
+	usuario:{
 		type:'string',
 		required: true,
 	},
-	tipo:{
+	oponente:{
+		type:'string',
+	},
+	puntaje1:{
+		type:'string',
+		required: true,
+	},
+	puntaje2:{
 		type:'string',
 		required: true,
 	},
