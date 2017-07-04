@@ -6,7 +6,7 @@
  */
 const passport = require('passport');
 //guarda los datos del usuario
-var user1; 
+var user1, pregunta, oponenteId, pendiente, pendienteId, bando; 
 //checar categorias 
 var todas=['"FPS"','"RPG"','"MMO"','"RTS"'];
 var category=0; 
@@ -15,15 +15,46 @@ var estado=0;
 var juego=0;
 var jg=0;
 var dificultad="Intermedio";
-var victoria;
+var oponente="CPU";
+var victoria="falta las respuestas del otro";
 //puntajes
 var puntaje=0;
 var elotro=0;
 //verificacion de la pregunta
 var mensaje="Fallaste";
-var pregunta;
 //funcion para la vista de perfil
+function jugador1 (req,res,info,m){
+	Game.create({
+		usuario: info.usuario,
+		estado: m,
+		puntaje: info.puntaje1,
+		oponente: user1.nombre,
+		bando: bando,
+	}).exec((err,user) => {
+		if(err){
+			console.log(err);
+			return res.status(500).send('Error');
+		}
+	})
+}
+function jugador2 (req,res,m){
+	Game.create({
+		usuario: user1.id,
+		estado: m,
+		puntaje: puntaje,
+		oponente: oponente,
+		bando: user1.bando,
+	}).exec((err,user) => {
+		if(err){
+			console.log(err);
+			return res.status(500).send('Error');
+		}
+	})
+}
 function perfil (req,res){
+		puntaje=0;
+		elotro=0;
+		juego=0;
 	return res.status(200).render('perfil',{
 		title: "Usuarios",
 		user: user1,
@@ -41,6 +72,7 @@ function game (req,res){
 		estado: estado,
 		puntaje: puntaje,
 		elotro: elotro,
+		oponente: oponente,
 		mensaje: mensaje,
 		layout: 'layout',
 	});
@@ -105,6 +137,27 @@ function readQuestions (req,res){
 			   pregunta=foundQuestion[0];
 			   estado=0;
 			   juego++;
+			   if(req.body.compu){
+				   oponente="CPU";
+			   }
+			   else{
+				   if(req.body.oponente){
+						oponenteId=req.body.oponente;
+						User.findOne({"id":req.body.oponente},{"nombre":1}).exec(function(err, items) {
+								oponente=items.nombre;
+						});
+				   }
+				   if(req.body.otrojuego && req.body.resp=="si"){
+					   pendienteId=req.body.otrojuego;
+						Partida.findOne({"id":req.body.otrojuego},{"usuario":1}).exec(function(err, items) {
+							pendiente=items.usuario;
+							User.findOne({"id":pendiente},{"nombre":1}).exec(function(err, items) {
+								oponente="*"+items.nombre;
+								bando=items.bando;
+							});
+						});
+					}
+			   }
 			   game(req,res);
 			})
 			.catch((err) =>{
@@ -126,44 +179,74 @@ function juegocompu (req, res){
 		}
 		else
 			mensaje="Fallaste";
-		if(dificultad=="Fácil"){
-			if(Math.floor(Math.random()* 4)+1 == 2)
-				elotro=elotro+50;
-		}
-		else{
-			if(dificultad=="Intermedio"){
-				if((Math.floor(Math.random()* 4)+1) == 2 || (Math.floor(Math.random()* 4)+1) ==3)
+		if(oponente=="CPU"){
+			if(dificultad=="Fácil"){
+				if(Math.floor(Math.random()* 4)+1 == 2)
 					elotro=elotro+50;
 			}
-			else
-				if(Math.floor(Math.random()* 4)+1 != 2)
-					elotro=elotro+50;
+			else{
+				if(dificultad=="Intermedio"){
+					if((Math.floor(Math.random()* 4)+1) == 2 || (Math.floor(Math.random()* 4)+1) ==3)
+						elotro=elotro+50;
+				}
+				else
+					if(Math.floor(Math.random()* 4)+1 != 2)
+						elotro=elotro+50;
+			}
 		}
 		estado=1;
 		game(req,res);
 	}
 	else{
 		jg=1;
-		if(puntaje > elotro)
-			victoria="ganaste";
-		else 
-			victoria="perdiste";
-		Game.create({
-			usuario: user1.id,
-			estado: victoria,
-			puntaje: puntaje,
-			oponente: "CPU",
-			bando: user1.bando,
-			}).exec((err,user) => {
-		if(err){
-			console.log(err);
-			return res.status(500).send('Error');
+		if(oponente=="CPU"){
+			if(puntaje > elotro)
+				victoria="ganaste";
+			else 
+				victoria="perdiste";
+			Game.create({
+				usuario: user1.id,
+				estado: victoria,
+				puntaje: puntaje,
+				oponente: "CPU",
+				bando: user1.bando,
+				}).exec((err,user) => {
+					if(err){
+						console.log(err);
+						return res.status(500).send('Error');
+					}
+				})
+		}
+		else{
+			if(oponente.indexOf("*")!=-1){
+				Partida.findOne({"id":pendienteId}).exec(function(err, info) {
+					if(info.puntaje1>puntaje){
+						jugador1(req,res,info,"ganaste");
+						jugador2(req,res,"perdiste");
+					}
+					else{
+						jugador2(req,res,"ganaste");
+						jugador1(req,res,info,"perdiste");
+					}
+					Partida.destroy({"id":pendienteId}).exec(function(err) {});
+				});
+			}
+			else{
+				//victoria="Espera a tu oponente";
+				Partida.create({
+					usuario: user1.id,
+					oponente: oponenteId,
+					puntaje1: puntaje,
+					puntaje2: 0,
+					}).exec((err,user) => {
+						if(err){
+							console.log(err);
+							return res.status(500).send('Error');
+						}
+					})
+			}
 		}
 		return perfil(req,res);
-	});
-		puntaje=0;
-		elotro=0;
-		juego=0;
 	}
 }
 //Obtiene el avance del usuario
@@ -197,6 +280,35 @@ function puntos(req,res){
 	})
 	.catch((err) =>{
 		res.status(500).send("algo ocurrio");
+	})
+}
+//Escoger oponente
+function readUser(req,res){
+	return User.find()
+	.then((foundUsers) => {
+		res.status(200).render('readUsers',{
+			title: "Usuarios",
+			users: foundUsers,
+			esteNo: user1.id,
+			layout: 'layout',
+		});
+	})
+	.catch((err) =>{
+		res.status(500).send("algo ocurrio");
+	})
+}
+//Juegos pendientes
+function pendiente(req,res){
+	return Partida.find({"oponente":user1.id})
+	.then((foundPartida) => {
+		res.status(200).render('partida',{
+			title: "Usuarios",
+			games: foundPartida,
+			layout: 'layout',
+		});
+	})
+	.catch((err) =>{
+		res.status(500).send(err);
 	})
 }
 //Permite al usuario escoger las categorias para jugar
@@ -235,6 +347,8 @@ module.exports = {
 	puntos,
 	perfil,
 	cambio,
+	pendiente,
+	readUser,
 	juegocompu,
 	logout,
 	categoria,
