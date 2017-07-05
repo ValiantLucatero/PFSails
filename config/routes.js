@@ -37,10 +37,12 @@ module.exports.routes = {
   'post /juego': 'UserController.readQuestions',
   'post /login': 'UserController.login',
   'post /checar': 'UserController.juegocompu',
+  'post /oponente': 'UserController.readUser',
   'post /puntos': 'UserController.puntos',
   'get /perfil': 'UserController.perfil',
   'post /categoria': 'UserController.categoria',
   'post /cambio': 'UserController.cambio',
+  'post /pendiente': 'UserController.pendiente',
   'post /logout': 'UserController.logout',
    '/': {
     view: 'homepage'

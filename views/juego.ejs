@@ -1,8 +1,11 @@
 <meta http-equiv="Refresh" content="5;url=/checar">
 <h1><%= question.pregunta %></h1>
 <h4>Categoría: <%= question.categoria %></h4>
+<h4>Oponente: <%= oponente %></h4>
 <h4>Tu puntaje: <%= puntaje %></h4>
-<h4>Oponente: <%= elotro %></h4>
+<% if(oponente=="CPU"){ %>
+	<h4>Puntaje de tu ponente: <%= elotro %></h4>
+<% } %>
 <h2 id="tiempo">Tiempo: 5</h2>
 <% if(estado==0){ %>
 	<form name="formulario" method='POST' action='/checar'>

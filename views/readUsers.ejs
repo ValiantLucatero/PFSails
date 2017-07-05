@@ -1,0 +1,15 @@
+<form method='POST' action='/juego'>
+	<% if(users.length>0){
+		for(user of users) {
+			if(esteNo!=user.id){%>
+				<input type="radio" name="oponente" value="<%= user.id %>"><%= user.nombre %><br/>
+		  <%}
+		}%>
+		<input type='submit' value='Jugar'/>
+	<%} else {%>
+		<h1>No tienes juegos pendientes</h1>
+	<% } %>
+</form>
+<form method='GET' action='/perfil'>
+		<input type='submit' value='Regresar'/>
+</form>

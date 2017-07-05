@@ -8,18 +8,20 @@ module.exports = {
   attributes: {
 	 nombre:{
 		type:'string',
-		required: true,
+    alpha: true,
+    unique: true,
+		required: true
 	 },
 	 email: {
-            type: 'email',
-            required: true,
-            unique: true
-        },
-        password: {
-            type: 'string',
-            required: true
-        },
-		bando:{
+    type: 'email',
+    required: true,
+    unique: true
+   },
+   password: {
+    type: 'string',
+    required: true
+   },
+		bando: {
 		type:'string',
 		required: true,
 		},
