@@ -1,3 +1,27 @@
+<!-- Navbar -->
+<div class="ui large top fixed hidden menu">
+  <div class="ui container">
+    <div class="ui pointing dropdown link item">
+			<span class="text">Jugar</span>
+			<i class="dropdown icon"></i>
+			<div class="menu">
+      	<div class="header">Modos</div>
+      	<div class="item">
+					<form method='POST' action='/juego'>
+						<input class="text" type='submit' value='PvIA'/>
+					</form>
+				</div>
+				<div class="item">
+					<span class="text">PvP</span>
+				</div>
+			</div>
+		</div>
+    <a class="item">Work</a>
+    <a class="item">Company</a>
+    <a class="item">Careers</a>
+		<a class="item">Salir</a>
+  </div>
+</div>
 <h1>Hola!! <%= user.nombre %></h1>
 <form method='POST' action='/logout'>
 	<input type='submit' value='Salir'/>
@@ -8,13 +32,9 @@
 	<p>En tu último juego <%= victoria %></p>
 <% } %>
 <p>Categorias con las que juegas: <%= categoria %></p>
-<form method='POST' action='/juego'>
-	<input type='submit' value='Jugar vs. CPU'/>
-</form>
 <form method='POST' action='/puntos'>
 	<input type='submit' value='Tus puntajes'/>
 </form>
-<button>Jugar vs. Otro</button>
 <h4>Instrucciones e información:</h4>
 <p><h5>Modo vs CPU:</h5>
 Se te presenta una ronda de 5 preguntas que tendrás que contestar de la mejor manera posible en un tiempo límite, mientras tu contestas la computadora tambien lo hará así que puedes notar un incremento en su puntaje, cuida que no sea mayar que el tuyo para ganar. Al finalizar las 5 preguntas la página se redireccionará a tu perfil y   aparecerá el resultado de tu última ronda abajo de tu dificultad elegida<p>
@@ -44,7 +64,7 @@ RTS:Son videojuegos de estrategia en los que no hay turnos sino que el tiempo tr
 <h4>¿Quieres creear una pregunta nueva?</h4>
 <form method='POST' action='/question'>
 	<label>Pregunta:</label>
-	<input type:'text' name='pregunta'/><br/>	
+	<input type:'text' name='pregunta'/><br/>
 	<label>Categoría:</label>
 	<select name="categoria">
 	  <option value="FPS">First Person Shooter</option>
