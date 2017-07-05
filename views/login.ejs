@@ -1,23 +1,79 @@
-<h2>Iniciar sesion</h2>
-<form method='POST' action='/login'>
-	<label>Email:</label>
-	<input type:'email' name='email'/>		
-	<label>Password:</label>
-	<input type='password' name='password' maxlength='16'/>
-	<input type='submit' name='enviar'/>
-</form>
-<h2>Regístrate</h2>
-<form method='POST' action='/user'>
-	<label>Nombre:</label>
-	<input type:'text' name='nombre' maxlength='9'/>				
-	<label>Password:</label>
-	<input type='password' name='password' maxlength='16'/>
-	<label>Email:</label>
-	<input type:'email' name='email'/>
-	<label>Bando</label>
-	<select name="bando">
-	  <option value="Rojo">Rojo</option>
-	  <option value="Azul">Azul</option>
-	</select>
-	<input type='submit' name='enviar'/>
-</form>
+<style type="text/css">
+    body {
+      background-color: #C6EAD7;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+    }
+</style>
+<div class="ui middle aligned center aligned grid">
+	<div class="column">
+		<h2 class="ui teal image header">
+			<img src="images/logo.png" class="image">
+			<div class="content">
+				Inicia sesi&oacute;n
+			</div>
+		</h2>
+		<form class="ui large form" method='POST' action='/login'>
+			<div class="ui stacked segment">
+				<div class="field">
+					<div class="ui left icon input">
+						<i class="mail icon"></i>
+						<input type="email" name="email" placeholder="Email"/>
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui left icon input">
+						<i class="lock icon"></i>
+						<input type="password" name="password" maxlength="16" placeholder="Password"/>
+					</div>
+				</div>
+				<input class="ui fluid large teal submit button" type='submit' name='enviar'/>
+			</div>
+			<div class="ui error message"></div>
+		</form>
+		<div class="ui message">
+			Eres nuevo? <a href="#" onclick="$('.ui.modal').modal('show');">Reg&iacute;strate</a>
+		</div>
+	</div>
+</div>
+
+<div class="ui modal">
+	<div class="header">Reg&iacute;stro</div>
+	<div class="content">
+		<form class="ui form" method='POST' action='/user'>
+			<div class="field">
+				<label>Nombre</label>
+				<input type:'text' name='nombre' maxlength='9'/>
+			</div>
+			<div class="field">
+				<label>Password</label>
+				<input type='password' name='password' maxlength='16'/>
+			</div>
+			<div class="field">
+				<label>Email</label>
+				<input type:'email' name='email'/>
+			</div>
+			<div class="field">
+				<label>Bando</label>
+				<select class="ui dropdown" name="bando">
+	  			<option value="Rojo">Rojo</option>
+	  			<option value="Azul">Azul</option>
+				</select>
+			</div>
+			<div class="actions">
+				<div class="ui red basic cancel button">
+					<i class="remove icon"></i>
+					Cancelar
+				</div>
+				<input class="ui green ok button" type='submit' name='Enviar'/>
+			</div>
+		</form>
+	</div>
+</div>

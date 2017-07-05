@@ -9,8 +9,8 @@ const passport = require('passport');
 var user1, pregunta, oponenteId, pendiente, pendienteId, bando; 
 //checar categorias 
 var todas=['"FPS"','"RPG"','"MMO"','"RTS"'];
-var category=0; 
-//verifica si la pregunta apenas se contesta o se califica 
+var category=0;
+//verifica si la pregunta apenas se contesta o se califica
 var estado=0;
 var juego=0;
 var jg=0;
@@ -55,7 +55,7 @@ function perfil (req,res){
 		puntaje=0;
 		elotro=0;
 		juego=0;
-	return res.status(200).render('perfil',{
+	return res.status(200).view('perfil',{
 		title: "Usuarios",
 		user: user1,
 		categoria: todas.join(),
@@ -66,7 +66,7 @@ function perfil (req,res){
 	});
 }
 function game (req,res){
-	return	res.status(200).render('juego',{
+	return	res.status(200).view('juego',{
 		title: "Preguntas",
 		question: pregunta,
 		estado: estado,
@@ -109,7 +109,7 @@ function createUser (req, res){
 			return res.status(500).send('Error');
 		}
 		return res.redirect('/login');
-	});	
+	});
 }
 //Crea preguntas con sus opciones
 function createQuestion (req, res){
