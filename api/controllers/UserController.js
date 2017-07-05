@@ -6,11 +6,11 @@
  */
 const passport = require('passport');
 //guarda los datos del usuario
-var user1; 
-//checar categorias 
+var user1;
+//checar categorias
 var todas=['"FPS"','"RPG"','"MMO"','"RTS"'];
-var category=0; 
-//verifica si la pregunta apenas se contesta o se califica 
+var category=0;
+//verifica si la pregunta apenas se contesta o se califica
 var estado=0;
 var juego=0;
 var jg=0;
@@ -24,7 +24,7 @@ var mensaje="Fallaste";
 var pregunta;
 //funcion para la vista de perfil
 function perfil (req,res){
-	return res.status(200).render('perfil',{
+	return res.status(200).view('perfil',{
 		title: "Usuarios",
 		user: user1,
 		categoria: todas.join(),
@@ -35,7 +35,7 @@ function perfil (req,res){
 	});
 }
 function game (req,res){
-	return	res.status(200).render('juego',{
+	return	res.status(200).view('juego',{
 		title: "Preguntas",
 		question: pregunta,
 		estado: estado,
@@ -77,7 +77,7 @@ function createUser (req, res){
 			return res.status(500).send('Error');
 		}
 		return res.redirect('/login');
-	});	
+	});
 }
 //Crea preguntas con sus opciones
 function createQuestion (req, res){
@@ -146,7 +146,7 @@ function juegocompu (req, res){
 		jg=1;
 		if(puntaje > elotro)
 			victoria="ganaste";
-		else 
+		else
 			victoria="perdiste";
 		Game.create({
 			usuario: user1.id,
@@ -185,7 +185,7 @@ function puntos(req,res){
 			else
 				wr++;
 		});
-		res.status(200).render('puntajes',{
+		res.status(200).view('puntajes',{
 			title: "Puntajes",
 			total: gn+wr,
 			ganados: gn,

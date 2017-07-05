@@ -1,91 +1,130 @@
-<!-- Navbar -->
-<div class="ui large top fixed hidden menu">
-  <div class="ui container">
-    <div class="ui pointing dropdown link item">
-			<span class="text">Jugar</span>
-			<i class="dropdown icon"></i>
-			<div class="menu">
-      	<div class="header">Modos</div>
-      	<div class="item">
-					<form method='POST' action='/juego'>
-						<input class="text" type='submit' value='PvIA'/>
-					</form>
-				</div>
-				<div class="item">
-					<span class="text">PvP</span>
-				</div>
-			</div>
-		</div>
-    <a class="item">Work</a>
-    <a class="item">Company</a>
-    <a class="item">Careers</a>
-		<a class="item">Salir</a>
-  </div>
+<style type="text/css">
+    body {
+      background-color: #C6EAD7;
+    }
+    .column {
+      max-width: 200%;
+    }
+</style>
+<div class="container">
+    <!-- Navbar -->
+    <div class="ui large top fixed hidden inverted menu">
+        <div class="ui pointing dropdown link item" id="game">
+			       <span class="text">Jugar</span>
+			       <i class="dropdown icon" onclick="$('#game').dropdown();"></i>
+			       <div class="menu">
+      	        <div class="header">Modos</div>
+                <div class="divider"></div>
+      	         <div class="item">
+					              <form method='POST' action='/juego'>
+						                    <input class="text" type='submit' value='PvIA'/>
+					              </form>
+				         </div>
+				         <div class="item">
+					              <span class="text">PvP</span>
+				         </div>
+			       </div>
+		    </div>
+        <div class="ui dropdown item" id="dif">
+          <span class="text">Dificultad</span>
+          <i class="dropdown icon" onclick="$('#dif').dropdown();"></i>
+          <div class="menu">
+            <div class="header"><%= dificultad %></div>
+            <div class="divider"></div>
+            <form method='POST' action='/cambio'>
+              <input type="radio" name="dificultad" value="Fácil">Fácil<br/>
+              	<input type="radio" name="dificultad" value="Intermedio">Intermedio<br/>
+              	<input type="radio" name="dificultad" value="Difícil">Difícil<br/>
+                <div class="item">
+                  <input type='submit' name='enviar'/>
+                </div>
+              </form>
+          </div>
+        </div>
+        <div class="ui dropdown item" id="cat">
+          <span class="text">Categor&iacute;as</span>
+          <i class="dropdown icon" onclick="$('#cat').dropdown();"></i>
+          <div class="menu">
+            <div class="header">Tus categor&iacute;as: <%= categoria %></div>
+            <div class="divider"></div>
+            <form method='POST' action='/categoria'>
+            	<input type="checkbox" name="FPS">First Person Shooter (FPS)<br>
+            	<input type="checkbox" name="RPG">Role Playing Game (RPG)<br>
+            	<input type="checkbox" name="MMO">Massive Multiplayer Online game (MMO)<br>
+            	<input type="checkbox" name="RTS">Real Time Strategy game (RTS)<br>
+            	<label>Si no marcas ninguna opcion jugarás con todas</label>
+              <div class="item">
+            	   <input type='submit' name='enviar'/>
+              </div>
+            </form>
+          </div>
+        </div>
+        <form method='POST' action='/puntos'>
+        	   <input class="item" type='submit' value='Tus puntajes'/>
+        </form>
+        <form method='POST' action='/logout'>
+        	<input class="item" type='submit' value='Salir'/>
+        </form>
+    </div>
 </div>
-<h1>Hola!! <%= user.nombre %></h1>
-<form method='POST' action='/logout'>
-	<input type='submit' value='Salir'/>
-</form>
-<p>Bando: <%= user.bando %></p>
-<p>Dificultad: <%= dificultad %></p>
-<% if(jg!=0){ %>
-	<p>En tu último juego <%= victoria %></p>
-<% } %>
-<p>Categorias con las que juegas: <%= categoria %></p>
-<form method='POST' action='/puntos'>
-	<input type='submit' value='Tus puntajes'/>
-</form>
-<h4>Instrucciones e información:</h4>
-<p><h5>Modo vs CPU:</h5>
-Se te presenta una ronda de 5 preguntas que tendrás que contestar de la mejor manera posible en un tiempo límite, mientras tu contestas la computadora tambien lo hará así que puedes notar un incremento en su puntaje, cuida que no sea mayar que el tuyo para ganar. Al finalizar las 5 preguntas la página se redireccionará a tu perfil y   aparecerá el resultado de tu última ronda abajo de tu dificultad elegida<p>
-<p><h5>Descripcion de las categorias:</h5>
-FPS:Los tiradores en primera persona son un tipo de juego de tiro tridimensional, con un punto de vista en primera persona con el que el jugador ve la acción a través de los ojos del personaje del jugador.<br/>
-RPG:Es un juego en el que, tal como indica su nombre, uno o más jugadores desempeñan un determinado rol, papel o personalidad. <br/>
-MMO:Es un videojuego en donde pueden participar, e interactuar en un mundo virtual, un gran número de jugadores del orden de cientos o miles simultáneamente (multijugador) conectados a través de la red.<br/>
-RTS:Son videojuegos de estrategia en los que no hay turnos sino que el tiempo transcurre de forma continua para los jugadores.
-</p>
-<h4>Cambiar dificultad:</h4>
-<form method='POST' action='/cambio'>
-	<input type="radio" name="dificultad" value="Fácil">Fácil<br/>
-	<input type="radio" name="dificultad" value="Intermedio">Intermedio<br/>
-	<input type="radio" name="dificultad" value="Difícil">Difícil<br/>
-	<input type='submit' name='enviar'/>
-</form>
-<h4>¿Con qué categorias quieres jugar?</h4>
-<form method='POST' action='/categoria'>
-	<label>Marca todas las opciones con las cuales quieres jugar:</label><br/>
-	<input type="checkbox" name="FPS">First Person Shooter (FPS)<br>
-	<input type="checkbox" name="RPG">Role Playing Game (RPG)<br>
-	<input type="checkbox" name="MMO">Massive Multiplayer Online game (MMO)<br>
-	<input type="checkbox" name="RTS">Real Time Strategy game (RTS)<br>
-	<label>Si no marcas ninguna opcion jugarás con todas</label>
-	<input type='submit' name='enviar'/>
-</form>
-<h4>¿Quieres creear una pregunta nueva?</h4>
-<form method='POST' action='/question'>
-	<label>Pregunta:</label>
-	<input type:'text' name='pregunta'/><br/>
-	<label>Categoría:</label>
-	<select name="categoria">
-	  <option value="FPS">First Person Shooter</option>
-	  <option value="RPG">Role Playing Game</option>
-	  <option value="MMO">Massive Multiplayer Online game</option>
-	  <option value="RTS">Real Time Strategy game</option>
-	</select><br/>
-	<label>Opcion 1:</label>
-	<input type:'text' name='opcion1'/><br/>
-	<label>Opcion 2:</label>
-	<input type:'text' name='opcion2'/><br/>
-	<label>Opcion 3:</label>
-	<input type:'text' name='opcion3'/><br/>
-	<label>Opcion 4:</label>
-	<input type:'text' name='opcion4'/><br/>
-	<label>Indica el número de la opcion que es la correcta:</label>
-	<select name="correcta">
-	  <option value="1">1</option>
-	  <option value="2">2</option>
-	  <option value="3">3</option>
-	  <option value="4">4</option>
-	</select>
-	<input type='submit' name='enviar'/>
-</form>
+
+  <div class="ui huge disabled button">Get Started</div>
+    <div class="ui six column centered grid">
+      <div class="column">
+        <h1 class="ui header">Hola!! <%= user.nombre %></h1>
+        <h2>Bando: <%= user.bando %></h2>
+        <% if(jg!=0){ %>
+        	<h3>En tu último juego <%= victoria %></h3>
+        <% } %>
+      </div>
+    </div>
+    <div class="ui two column centered grid">
+      <div class="column">
+        <div class="ui top attached tabular menu">
+          <a class="item active" data-tab="first">Instrucciones</a>
+          <a class="item" data-tab="second">Descripci&oacute;n</a>
+          <a class="item" data-tab="third">Nueva pregunta</a>
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+          <p><h5>Modo vs CPU:</h5>
+          Se te presenta una ronda de 5 preguntas que tendrás que contestar de la mejor manera posible en un tiempo límite, mientras tu contestas la computadora tambien lo hará así que puedes notar un incremento en su puntaje, cuida que no sea mayor que el tuyo para ganar. Al finalizar las 5 preguntas serás redireccionado a tu perfil y   aparecerá el resultado de tu última ronda debajo de tu bando<p>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+          <p><h5>Descripcion de las categorias:</h5>
+          <strong>FPS:</strong>Los tiradores en primera persona son un tipo de juego de tiro tridimensional, con un punto de vista en primera persona con el que el jugador ve la acción a través de los ojos del personaje del jugador.<br/>
+          <strong>RPG:</strong>Es un juego en el que, tal como indica su nombre, uno o más jugadores desempeñan un determinado rol, papel o personalidad. <br/>
+          <strong>MMO:</strong>Es un videojuego en donde pueden participar, e interactuar en un mundo virtual, un gran número de jugadores del orden de cientos o miles simultáneamente (multijugador) conectados a través de la red.<br/>
+          <strong>RTS:</strong>Son videojuegos de estrategia en los que no hay turnos sino que el tiempo transcurre de forma continua para los jugadores.
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="third">
+          <h4>¿Quieres creear una pregunta nueva?</h4>
+          <form method='POST' action='/question'>
+          	<label>Pregunta:</label>
+          	<input type:'text' name='pregunta'/><br/>
+          	<label>Categoría:</label>
+          	<select name="categoria">
+          	  <option value="FPS">First Person Shooter</option>
+          	  <option value="RPG">Role Playing Game</option>
+          	  <option value="MMO">Massive Multiplayer Online game</option>
+          	  <option value="RTS">Real Time Strategy game</option>
+          	</select><br/>
+          	<label>Opcion 1:</label>
+          	<input type:'text' name='opcion1'/><br/>
+          	<label>Opcion 2:</label>
+          	<input type:'text' name='opcion2'/><br/>
+          	<label>Opcion 3:</label>
+          	<input type:'text' name='opcion3'/><br/>
+          	<label>Opcion 4:</label>
+          	<input type:'text' name='opcion4'/><br/>
+          	<label>Indica el número de la opcion que es la correcta:</label>
+          	<select name="correcta">
+          	  <option value="1">1</option>
+          	  <option value="2">2</option>
+          	  <option value="3">3</option>
+          	  <option value="4">4</option>
+          	</select>
+          	<input type='submit' name='enviar'/>
+          </form>
+        </div>
+      </div>
+    </div>
